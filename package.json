@@ -1,7 +1,7 @@
 {
   "name": "easy-mock",
   "version": "1.4.0",
-  "description": "可视化模拟数据生成服务",
+  "description": "可视化模拟数据生成服务（添加 serviceName 支持 EntityService）",
   "main": "app.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test istanbul cover _mocha test/*",
