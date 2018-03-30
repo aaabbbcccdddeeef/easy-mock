@@ -28,10 +28,14 @@
                 <span>Base URL</span>
                 {{baseUrl}}
               </p>
-              <p class="tag">
-                <span>Project ID</span>
-                {{project._id}}
-              </p>
+            <p class="tag">
+              <span>Project ID</span>
+              {{project._id}}
+            </p>
+            <p class="tag">
+              <span>Count</span>
+              {{list.length}}
+            </p>
             </Col>
             <Col span="5">
               <div>
@@ -166,7 +170,8 @@ export default {
             </tag>
           }
         },
-        { title: 'URL', width: 420, ellipsis: true, sortable: true, key: 'url' },
+        { title: 'serviceName', width: 200, ellipsis: true, sortable: true, key: 'serviceName' },
+        { title: 'URL', width: 220, ellipsis: true, sortable: true, key: 'url' },
         { title: this.$t('p.detail.columns[0]'), ellipsis: true, key: 'description' },
         {
           title: this.$t('p.detail.columns[1]'),
@@ -214,7 +219,7 @@ export default {
       const reg = this.keywords && new RegExp(this.keywords, 'i')
       return reg
         ? list.filter(item => (
-          reg.test(item.name) || reg.test(item.url) || reg.test(item.method)
+          reg.test(item.name) || reg.test(item.url) || reg.test(item.method) || reg.test(item.serviceName) || reg.test(item.protoName)
         ))
         : list
     },

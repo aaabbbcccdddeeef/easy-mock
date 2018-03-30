@@ -1,11 +1,17 @@
 <template>
   <div class="em-mock-expand">
+    <h2>serviceName</h2>
+    <p>{{mock.serviceName}}</p>
+    <h2>protoName</h2>
+    <p>{{mock.protoName}}</p>
     <h2>Method</h2>
     <p>{{mock.method}}</p>
     <h2>URL</h2>
     <p>{{mock.url}}</p>
+    <h2 v-if="(mock.method!=='get' && mock.method!=='delete')">请求参数</h2>
+    <textarea style="width: 100%;margin-top: 6px;margin-bottom: 10px;background: #41444e;color: #fff;padding: 6px;border-radius: 4px;font-size: 13px;" rows="6" readonly v-if="(mock.method!=='get' && mock.method!=='delete')">{{mock.params}}</textarea>
     <h2>{{$t('p.detail.expand.description')}}</h2>
-    <p>{{mock.description}}</p>
+    <textarea style="width: 100%;margin-top: 6px;margin-bottom: 10px;background: #41444e;color: #fff;padding: 6px;border-radius: 4px;font-size: 13px;" rows="6" readonly>{{mock.description}}</textarea>
     <Tabs value="request" v-if="mock.parameters || mock.response_model">
       <Tab-pane :label="$t('p.detail.expand.tab[0]')" name="request" v-if="mock.parameters">
         <Table :columns="columnsRequest" :data="request"></Table>

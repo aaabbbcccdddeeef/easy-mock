@@ -13,6 +13,9 @@ const schema = new Schema({
   mode: String,
   url: String,
   method: String,
+  params: String,
+  serviceName: String,
+  protoName: String,
   parameters: String,
   response_model: String,
   create_at: {

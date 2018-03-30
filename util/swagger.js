@@ -22,10 +22,11 @@ function createMock (projectId, swaggerDocs) {
       const fullAPIPath = path.posix.join(basePath, url)
       for (let method in paths[url]) {
         method = method.toLowerCase()
-
+        const protoName = paths[url][method]['responses']['200'].schema.$$ref.split('/').pop()
         const operation = paths[url][method]
         const desc = operation.summary || operation.description
-        const api = _.find(apis, { method, url: fullAPIPath })
+        const serviceName = operation.operationId || ''
+        const api = _.find(apis, { method, serviceName: serviceName })
         const mode = _.get(operation, 'responses["200"].example') || _.get(operation, 'responses["default"].example') || '{}'
         let responseModel, parameters
 
@@ -45,8 +46,10 @@ function createMock (projectId, swaggerDocs) {
           newAPIs.push({
             mode,
             method,
+            protoName,
             url: fullAPIPath,
             parameters,
+            serviceName,
             response_model: responseModel,
             description: desc,
             project: projectId
@@ -58,7 +61,9 @@ function createMock (projectId, swaggerDocs) {
         let newKeys = Object.keys(flatten(JSON.parse(mode)))
         let oldKeys = Object.keys(flatten(JSON.parse(api.mode)))
 
+        api.serviceName = serviceName
         api.parameters = parameters
+        api.protoName = protoName
         api.url = fullAPIPath || api.url
         api.method = method || api.method
         api.response_model = responseModel
